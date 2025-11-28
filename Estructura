@@ -1,0 +1,50 @@
+Camino_al_gym_full_project
+|   project-structure.txt
+|   README.md
+|   
++---.venv
+|   |   .gitignore
+|   |--- +...
++---.vscode
+|   |--- +...
++---backend
+|   +---_pycache
+|   |   \---+..
+|   +---static
+|   |   \---uploads
+|   +---venv
+|   |--- +...
+|   | app.py
+|   | config.py
+|   | gimnasio.db
+|   | models.py
+|   | Readme_backend.md
+|   | requirements.txt
+|   |
++---frontend
+|   +---node_modules
+|   |   \---+..
+|   +---public
+|   |     | ---index.html
+|   +---src
+|   |     |---components
+|   |     |    | ---About.js
+|   |     |    | ---AdminDashboard.js
+|   |     |    | ---AdminLogin.js
+|   |     |    | ---Contact.js
+|   |     |    | ---Footer.js
+|   |     |    | ---Home.js
+|   |     |    | ---Navbar.js
+|   |     |    | ---PostDetail.js
+|   |     |    | ---Reserve.js
+|   |     |    | ---Sidebar.js
+|   |     |---App.js
+|   |     |---index.css
+|   |     |---index.js
+|   |
+|   |---package-lock.json
+|   |---package.json
+|   |---postcss.config.js
+|   |---tailwind.config.js
+| 
+|    Readme.md
