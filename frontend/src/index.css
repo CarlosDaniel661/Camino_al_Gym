@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* base background + dark mode compatibility */
+:root {
+  --bg: #f3f4f6;
+  --card: #ffffff;
+  --muted: #6b7280;
+}
+
+html.dark {
+  --bg: #0b1220;
+  --card: #0f1724;
+  --muted: #9ca3af;
+}
+
+body {
+  background-color: var(--bg);
+  color: #111827;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ensure main content doesn't hide under fixed navbar and sidebar */
+html, body, #root {
+  height: 100%;
+}
+
+main {
+  min-height: calc(100vh - 120px);
+}
+
+/* small helpers */
+.card {
+  background-color: var(--card);
+}
