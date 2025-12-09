@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <footer className="mt-8 bg-gray-900 text-gray-100 py-6">
-      <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="text-sm">© {new Date().getFullYear()} Camino al Gym. Todos los derechos reservados.</div>
+    <footer className="bg-gray-800 text-white py-6 mt-auto" role="contentinfo">
+      <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row md:items-center md:justify-between">
+        <p className="text-sm">© {new Date().getFullYear()} Camino al Gym. Todos los derechos reservados.</p>
 
-        <nav className="flex gap-4">
-          <Link to="/sobre-mi" className="hover:text-blue-300">Sobre mí</Link>
-          <Link to="/servicios" className="hover:text-blue-300">Servicios</Link>
-          <Link to="/contacto" className="hover:text-blue-300">Contacto</Link>
+        <nav className="flex space-x-4 mt-4 md:mt-0" aria-label="Footer navigation">
+          <Link to="/about" className="hover:text-blue-400">Sobre mí</Link>
+          <Link to="/services" className="hover:text-blue-400">Servicios</Link>
+          <Link to="/contact" className="hover:text-blue-400">Contacto</Link>
         </nav>
       </div>
     </footer>

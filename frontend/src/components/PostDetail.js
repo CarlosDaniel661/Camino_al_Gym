@@ -16,27 +16,52 @@ export default function PostDetail() {
         console.error("Error al cargar post:", err);
         setError("No se pudo cargar este contenido.");
       });
+
+    // increment visits for analytics
+    axios.post('/api/visit').catch(()=>{});
   }, [id]);
 
   if (error) {
     return (
       <div className="p-6 max-w-lg mx-auto text-center">
-        <h2 className="text-2xl font-bold text-red-600 mb-2">Error</h2>
-        <p className="text-gray-600">{error}</p>
-        <Link className="text-blue-600 underline mt-4 inline-block" to="/">← Volver al inicio</Link>
+        <h2 className="text-2xl font-bold mb-2" style={{ color: '#dc2626' }}>
+          Error
+        </h2>
+        <p style={{ color: 'var(--text-muted)' }}>{error}</p>
+        <Link className="hover:underline mt-4 inline-block" to="/">
+          ← Volver al inicio
+        </Link>
       </div>
     );
   }
 
-  if (!post) return <div className="p-6 text-center text-gray-500">Cargando...</div>;
+  if (!post) {
+    return (
+      <div className="p-6 text-center" style={{ color: 'var(--text-muted)' }}>
+        Cargando...
+      </div>
+    );
+  }
 
   return (
     <div className="p-4 max-w-2xl mx-auto">
-      <button className="mb-4 flex items-center gap-2 text-gray-600 hover:text-black transition" onClick={() => navigate(-1)}>← Volver</button>
+      <button 
+        className="mb-4 flex items-center gap-2 transition"
+        style={{ color: 'var(--text-secondary)' }}
+        onClick={() => navigate(-1)}
+      >
+        ← Volver
+      </button>
 
-      <article className="bg-white dark:bg-gray-800 shadow-lg rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700">
-        <div className="p-4 border-b">
-          <h1 className="text-2xl font-bold">{post.title}</h1>
+      <article 
+        className="shadow-lg rounded-xl overflow-hidden border"
+        style={{ 
+          backgroundColor: 'var(--card)',
+          borderColor: 'var(--card-border)'
+        }}
+      >
+        <div className="p-4 border-b" style={{ borderColor: 'var(--card-border)' }}>
+          <h1 className="text-2xl font-bold feed-title">{post.title}</h1>
         </div>
 
         <div className="bg-black flex justify-center">
@@ -50,21 +75,27 @@ export default function PostDetail() {
 
           {post.media_type === "embed" && post.media_url && (
             <div className="relative w-full pt-[56.25%]">
-              <iframe src={post.media_url} title={post.title} className="absolute top-0 left-0 w-full h-full" allowFullScreen />
+              <iframe src={post.media_url} title={post.title} className="absolute top-0 left-0 w-full h-full" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
             </div>
           )}
         </div>
 
         <div className="p-4">
-          <p className="text-gray-700 dark:text-gray-200 text-lg leading-relaxed">{post.body}</p>
-
-          <div className="flex items-center gap-5 mt-6">
-            <button className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-full shadow hover:bg-red-600 transition"
-              onClick={() => axios.post(`/api/like/${post.id}`).then((r) => setPost({ ...post, likes: r.data.likes })).catch(()=>{})}>
+          <p className="text-lg leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+            {post.body}
+          </p>
+          <div className="flex items-center gap-5 mt-6 flex-wrap">
+            <button 
+              className="flex items-center gap-2 px-4 py-2 text-white rounded-full shadow transition hover:opacity-90"
+              style={{ backgroundColor: '#ef4444' }}
+              onClick={() => axios.post(`/api/like/${post.id}`).then((r) => setPost({ ...post, likes: r.data.likes })).catch(()=>{})}
+            >
               ❤️ <span>{post.likes || 0}</span>
             </button>
 
-            <Link className="text-blue-600 dark:text-blue-400 font-medium hover:underline" to="/">Volver al inicio</Link>
+            <Link className="font-medium hover:underline" to="/">
+              Volver al inicio
+            </Link>
           </div>
         </div>
       </article>

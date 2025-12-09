@@ -2,35 +2,177 @@
 @tailwind components;
 @tailwind utilities;
 
-/* base background + dark mode compatibility */
+/* === COLOR SYSTEM === */
 :root {
-  --bg: #f3f4f6;
+  /* Light mode */
+  --bg: #ffffff;
+  --bg-secondary: #f9fafb;
+  --text-primary: #000000;
+  --text-secondary: #374151;
+  --text-muted: #9ca3af;
   --card: #ffffff;
-  --muted: #6b7280;
+  --card-border: #e5e7eb;
+  --navbar-bg: #ffffff;
+  --navbar-text: #000000;
+  --sidebar-bg: #ffffff;
+  --sidebar-text: #000000;
 }
 
-html.dark {
-  --bg: #0b1220;
-  --card: #0f1724;
-  --muted: #9ca3af;
+/* Dark mode */
+[data-theme="dark"] {
+  --bg: #0f172a;
+  --bg-secondary: #1a254d;
+  --text-primary: #f0f4f8;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --card: #1a254d;
+  --card-border: #334155;
+  --navbar-bg: #0f172a;
+  --navbar-text: #f0f4f8;
+  --sidebar-bg: #1a254d;
+  --sidebar-text: #f0f4f8;
 }
+
+/* === BASE STYLING === */
+html, body, #root { height: 100%; margin: 0; }
 
 body {
   background-color: var(--bg);
-  color: #111827;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  color: var(--text-primary);
+  transition: background-color 200ms, color 200ms;
+  font-family: system-ui, -apple-system, sans-serif;
 }
 
-/* ensure main content doesn't hide under fixed navbar and sidebar */
-html, body, #root {
-  height: 100%;
+/* Smooth scroll with header offset to prevent overlap */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4rem;
 }
 
-main {
-  min-height: calc(100vh - 120px);
+@media (min-width: 768px) {
+  html { scroll-padding-top: 5rem; }
 }
 
-/* small helpers */
+/* === TYPOGRAPHY === */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+p, li, label {
+  color: var(--text-secondary);
+}
+
+a {
+  color: #2563eb;
+}
+
+[data-theme="dark"] a {
+  color: #60a5fa;
+}
+
+/* === CARDS & CONTAINERS === */
 .card {
   background-color: var(--card);
+  color: var(--text-primary);
+  border-color: var(--card-border);
+}
+
+.bg-white {
+  background-color: var(--card) !important;
+  color: var(--text-primary) !important;
+}
+
+/* === FORM ELEMENTS === */
+input,
+textarea,
+select {
+  background-color: var(--bg) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--card-border) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* === SIDEBAR STYLING === */
+.sidebar {
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  border-right: 1px solid var(--card-border);
+}
+
+.sidebar h3,
+.sidebar h2 {
+  color: var(--sidebar-text);
+}
+
+.sidebar a {
+  color: var(--text-secondary);
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+  color: #2563eb;
+}
+
+[data-theme="dark"] .sidebar a:hover,
+[data-theme="dark"] .sidebar a.active {
+  color: #60a5fa;
+}
+
+/* === NAVBAR STYLING === */
+header {
+  background-color: var(--navbar-bg) !important;
+  color: var(--navbar-text) !important;
+  border-color: var(--card-border) !important;
+}
+
+header h1,
+header button {
+  color: var(--navbar-text) !important;
+}
+
+/* === SPECIFIC TEXT FIXES === */
+.text-gray-700 { color: var(--text-secondary) !important; }
+.text-gray-600 { color: var(--text-muted) !important; }
+.text-gray-500 { color: var(--text-muted) !important; }
+.text-gray-800 { color: var(--text-primary) !important; }
+.text-black { color: var(--text-primary) !important; }
+
+/* === PROFILE IMAGES === */
+.profile-img,
+.profile-focus-safe {
+  scroll-margin-top: 5rem;
+}
+
+/* Ensure profile images don't get cut off by header */
+.profile-img {
+  display: block;
+  max-width: 100%;
+}
+
+/* === UTILITY CLASSES === */
+.feed-title {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+/* Force consistent spacing for page sections */
+main {
+  min-height: 100vh;
+}
+
+/* === MEDIA QUERIES === */
+@media (max-width: 768px) {
+  html { scroll-padding-top: 4rem; }
+  
+  .sidebar {
+    position: fixed;
+    width: 100%;
+    height: auto;
+    max-height: calc(100vh - 4rem);
+  }
 }
