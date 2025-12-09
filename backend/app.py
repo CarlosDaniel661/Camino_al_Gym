@@ -1,7 +1,7 @@
 # backend/app.py
 import os
 from flask import Flask, request, jsonify, send_from_directory, redirect, url_for, session
-from config import Config
+from config import Config, ProductionConfig, DevelopmentConfig
 from models import db, Post, Reservation, ContactMessage, Service, AdminProfile
 from pathlib import Path
 from werkzeug.utils import secure_filename
@@ -13,11 +13,28 @@ import logging
 ALLOWED_IMAGE = {'png','jpg','jpeg','gif','webp'}
 ALLOWED_VIDEO = {'mp4','webm','ogg','mov'}
 
-def create_app():
+def create_app(config_class=None):
+    """Create and configure Flask app"""
     app = Flask(__name__, static_folder="static")
-    app.config.from_object(Config)
-    app.secret_key = app.config.get('SECRET_KEY','dev-secret-key')
+    
+    # Select config based on environment
+    if config_class is None:
+        env = os.environ.get('FLASK_ENV', 'development').lower()
+        if env == 'production':
+            config_class = ProductionConfig
+        else:
+            config_class = DevelopmentConfig
+    
+    app.config.from_object(config_class)
+    app.secret_key = app.config.get('SECRET_KEY', 'dev-secret-key-change-this')
+    
+    # Configure CORS
     CORS(app, supports_credentials=True)
+    
+    # Setup logging
+    logging.basicConfig(level=app.config.get('LOG_LEVEL', 'INFO'))
+    
+    # Create upload folder
     Path(app.config['UPLOAD_FOLDER']).mkdir(parents=True, exist_ok=True)
     db.init_app(app)
 

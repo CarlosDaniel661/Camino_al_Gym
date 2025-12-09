@@ -4,20 +4,52 @@ from pathlib import Path
 BASE_DIR = Path(__file__).parent
 
 class Config:
-    SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-secret-key')
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', f"sqlite:///{BASE_DIR / 'gimnasio.db'}")
+    """Base configuration"""
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-secret-key-change-this')
+    SQLALCHEMY_DATABASE_URI = os.environ.get(
+        'DATABASE_URL', 
+        f"sqlite:///{BASE_DIR / 'gimnasio.db'}"
+    )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = os.environ.get("UPLOAD_FOLDER", str(BASE_DIR / "static" / "uploads"))
     MAX_CONTENT_LENGTH = 200 * 1024 * 1024  # 200 MB
 
-    # Admin credentials (simple protection)
+    # Admin credentials (simple protection - use strong passwords in production)
     ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME", "admin")
-    ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "changeme")  # reemplaza en producción
+    ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "changeme")
 
-    # AWS S3 (para media)
+    # AWS S3 (for cloud file storage)
     AWS_S3_BUCKET = os.environ.get("AWS_S3_BUCKET")
     AWS_REGION = os.environ.get("AWS_REGION", "us-east-1")
 
-    # YouTube uploads via API: path to credentials JSON y refresh token en env
-    YT_CLIENT_SECRETS_FILE = os.environ.get("YT_CLIENT_SECRETS_FILE")  # e.g. '/path/to/client_secrets.json'
+    # YouTube uploads via API
+    YT_CLIENT_SECRETS_FILE = os.environ.get("YT_CLIENT_SECRETS_FILE")
     YT_REFRESH_TOKEN = os.environ.get("YT_REFRESH_TOKEN")
+
+    # CORS configuration
+    CORS_ORIGINS = os.environ.get("CORS_ORIGINS", "http://localhost:3000,http://localhost:5000").split(",")
+
+    # Logging
+    LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO")
+
+class ProductionConfig(Config):
+    """Production-specific configuration"""
+    DEBUG = False
+    TESTING = False
+    # Force HTTPS in production
+    SESSION_COOKIE_SECURE = True
+    SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SAMESITE = 'Lax'
+
+class DevelopmentConfig(Config):
+    """Development configuration"""
+    DEBUG = True
+    TESTING = False
+    SESSION_COOKIE_SECURE = False
+
+class TestingConfig(Config):
+    """Testing configuration"""
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
+    DEBUG = True
+
