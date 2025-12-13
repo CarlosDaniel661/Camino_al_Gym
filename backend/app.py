@@ -9,6 +9,7 @@ from flask_cors import CORS
 import boto3
 import json
 import logging
+from flask_migrate import Migrate
 
 ALLOWED_IMAGE = {'png','jpg','jpeg','gif','webp'}
 ALLOWED_VIDEO = {'mp4','webm','ogg','mov'}
@@ -37,6 +38,9 @@ def create_app(config_class=None):
     # Create upload folder
     Path(app.config['UPLOAD_FOLDER']).mkdir(parents=True, exist_ok=True)
     db.init_app(app)
+    # Initialize migrations
+    migrate = Migrate()
+    migrate.init_app(app, db)
 
     with app.app_context():
         db.create_all()

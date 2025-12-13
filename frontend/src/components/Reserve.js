@@ -60,9 +60,9 @@ export default function Reserve() {
           onChange={(e) => setForm({ ...form, service: e.target.value })}
         >
           <option value="">Seleccioná un servicio</option>
-          <option value="clase-personal">Clase personal</option>
-          <option value="clase-grupal">Clase grupal</option>
-          <option value="evaluacion">Evaluación física</option>
+          <option value="clase-personal">Entrenamiento y Rutina</option>
+          <option value="clase-grupal">Entrenamiento Personalizado</option>
+          <option value="evaluacion">Clase Funcional</option>
         </select>
         <input 
           type="datetime-local" 
