@@ -42,13 +42,25 @@ def create_app(config_class=None):
     migrate = Migrate()
     migrate.init_app(app, db)
 
-    with app.app_context():
-        db.create_all()
-        # Ensure a single AdminProfile row exists
-        if AdminProfile.query.first() is None:
-            ap = AdminProfile(profile_main_url=None, profile_owner_url=None, visits=0)
-            db.session.add(ap)
-            db.session.commit()
+    # Track if database has been initialized
+    app.db_initialized = False
+
+    def init_db():
+        """Initialize database tables if not already done"""
+        if not app.db_initialized:
+            try:
+                with app.app_context():
+                    db.create_all()
+                    # Ensure a single AdminProfile row exists
+                    if AdminProfile.query.first() is None:
+                        ap = AdminProfile(profile_main_url=None, profile_owner_url=None, visits=0)
+                        db.session.add(ap)
+                        db.session.commit()
+                    app.db_initialized = True
+            except Exception as e:
+                app.logger.error(f"Database initialization error: {e}")
+
+    app.init_db = init_db
 
     # --- Helpers ---
     def allowed_file(filename, allowed):
@@ -77,6 +89,7 @@ def create_app(config_class=None):
     # --- Public API ---
     @app.route('/api/posts', methods=['GET'])
     def api_posts():
+        app.init_db()  # Ensure database is initialized
         posts = Post.query.order_by(Post.pinned.desc(), Post.created_at.desc()).all()
         return jsonify([p.to_dict() for p in posts])
 
@@ -356,6 +369,12 @@ def create_app(config_class=None):
     @app.route('/static/uploads/<path:filename>')
     def uploaded_file(filename):
         return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+    # Temporary endpoint to initialize database
+    @app.route('/init-db', methods=['GET'])
+    def init_db_endpoint():
+        app.init_db()
+        return jsonify({'message': 'Database initialized'})
 
     return app
 

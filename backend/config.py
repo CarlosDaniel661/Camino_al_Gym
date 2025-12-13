@@ -3,12 +3,18 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).parent
 
+# For production (Fly.io), use /app/data directory for persistent storage
+DATA_DIR = Path(os.environ.get('DATABASE_DIR', str(BASE_DIR)))
+if os.environ.get('FLASK_ENV') == 'production':
+    DATA_DIR = Path('/app/data')
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+
 class Config:
     """Base configuration"""
     SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-secret-key-change-this')
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         'DATABASE_URL', 
-        f"sqlite:///{BASE_DIR / 'gimnasio.db'}"
+        f"sqlite:///{DATA_DIR / 'gimnasio.db'}"
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = os.environ.get("UPLOAD_FOLDER", str(BASE_DIR / "static" / "uploads"))
