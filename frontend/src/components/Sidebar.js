@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 
 export default function Sidebar() {
   const location = useLocation();
-  const [profile, setProfile] = useState({ profile_main_url: "/profile.jpg" });
+  const [profile, setProfile] = useState({
+    profile_main_url: "/profile.jpg",
+  });
 
   useEffect(() => {
-    axios.get("/api/admin/profile").then(r => {
-      if (r.data && r.data.profile_main_url) setProfile(r.data);
-    }).catch(()=>{});
+    api
+      .get("/api/admin/profile")
+      .then((r) => {
+        if (r.data && r.data.profile_main_url) {
+          setProfile(r.data);
+        }
+      })
+      .catch(() => {});
   }, []);
 
   const linkClass = (path) =>
@@ -22,9 +29,9 @@ export default function Sidebar() {
   return (
     <aside
       className="w-56 border-r p-4 hidden md:block sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto sidebar"
-      style={{ 
-        backgroundColor: 'var(--sidebar-bg)',
-        color: 'var(--sidebar-text)'
+      style={{
+        backgroundColor: "var(--sidebar-bg)",
+        color: "var(--sidebar-text)",
       }}
       role="navigation"
       aria-label="Sidebar"
@@ -36,20 +43,30 @@ export default function Sidebar() {
           className="w-24 h-24 rounded-full object-cover shadow profile-img profile-focus-safe"
           style={{ objectPosition: "center" }}
         />
-        <h3 
+        <h3
           className="mt-3 font-semibold"
-          style={{ color: 'var(--sidebar-text)' }}
+          style={{ color: "var(--sidebar-text)" }}
         >
           Camino al Gym
         </h3>
       </div>
 
       <nav className="flex flex-col gap-2">
-        <Link to="/" className={linkClass("/")}>Inicio</Link>
-        <Link to="/about" className={linkClass("/about")}>Sobre mí</Link>
-        <Link to="/services" className={linkClass("/services")}>Servicios</Link>
-        <Link to="/contact" className={linkClass("/contact")}>Contacto</Link>
-        <Link to="/reserve" className={linkClass("/reserve")}>Reservas</Link>
+        <Link to="/" className={linkClass("/")}>
+          Inicio
+        </Link>
+        <Link to="/about" className={linkClass("/about")}>
+          Sobre mí
+        </Link>
+        <Link to="/services" className={linkClass("/services")}>
+          Servicios
+        </Link>
+        <Link to="/contact" className={linkClass("/contact")}>
+          Contacto
+        </Link>
+        <Link to="/reserve" className={linkClass("/reserve")}>
+          Reservas
+        </Link>
       </nav>
     </aside>
   );

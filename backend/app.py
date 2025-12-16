@@ -30,7 +30,11 @@ def create_app(config_class=None):
     app.secret_key = app.config.get('SECRET_KEY', 'dev-secret-key-change-this')
     
     # Configure CORS
-    CORS(app, supports_credentials=True)
+    CORS(
+        app,
+        supports_credentials=True,
+        origins=app.config['CORS_ORIGINS']
+    )
     
     # Setup logging
     logging.basicConfig(level=app.config.get('LOG_LEVEL', 'INFO'))

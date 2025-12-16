@@ -27,3 +27,5 @@ coverage/
 .cache/
 .next/
 out/
+.vercel
+.env*.local
