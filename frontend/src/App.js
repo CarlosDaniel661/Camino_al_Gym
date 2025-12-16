@@ -5,6 +5,7 @@ import { HelmetProvider } from "react-helmet-async";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
+import MobileNav from "./components/MobileNav";
 
 import Home from "./components/Home";
 import About from "./components/About";
@@ -27,8 +28,12 @@ export default function App() {
   });
 
   useEffect(() => {
-    // Use data-theme attribute so your CSS rules that target [data-theme="dark"] work
-    document.documentElement.setAttribute("data-theme", theme === "dark" ? "dark" : "light");
+    // Apply dark class to html element for Tailwind dark mode
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
     try { localStorage.setItem("theme", theme); } catch {}
   }, [theme]);
 
@@ -42,8 +47,8 @@ export default function App() {
             <Sidebar />
 
             {/* Main content: add generous top padding to prevent header from overlapping any content, including images */}
-            <main 
-              className="flex-grow p-4 md:p-8 pt-20 md:pt-24" 
+            <main
+              className="flex-grow p-4 md:p-8 pt-20 md:pt-24 pb-20 md:pb-8"
               aria-live="polite"
             >
               <Routes>
@@ -60,6 +65,7 @@ export default function App() {
           </div>
 
           <Footer />
+          <MobileNav />
         </div>
       </Router>
     </HelmetProvider>

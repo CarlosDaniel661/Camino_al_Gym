@@ -20,42 +20,27 @@ export default function Reserve() {
   };
 
   return (
-    <div 
-      className="max-w-xl mx-auto shadow-md rounded-xl p-6 mt-6"
-      style={{ backgroundColor: 'var(--card)' }}
-    >
+    <div className="min-h-screen bg-white dark:bg-gray-900 flex justify-center items-center">
+      <div 
+        className="max-w-xl mx-auto shadow-md rounded-xl p-6 bg-white dark:bg-gray-800"
+      >
       <h2 className="text-2xl font-bold mb-4 feed-title">Reservar turno</h2>
 
       <div className="space-y-4">
         <input 
-          className="w-full border rounded-lg p-3"
-          style={{ 
-            backgroundColor: 'var(--bg)',
-            borderColor: 'var(--card-border)',
-            color: 'var(--text-primary)'
-          }}
+          className="w-full border rounded-lg p-3 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
           placeholder="Nombre" 
           value={form.name} 
           onChange={(e) => setForm({ ...form, name: e.target.value })} 
         />
         <input 
-          className="w-full border rounded-lg p-3"
-          style={{ 
-            backgroundColor: 'var(--bg)',
-            borderColor: 'var(--card-border)',
-            color: 'var(--text-primary)'
-          }}
+          className="w-full border rounded-lg p-3 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
           placeholder="Teléfono o email" 
           value={form.contact} 
           onChange={(e) => setForm({ ...form, contact: e.target.value })} 
         />
         <select 
-          className="w-full border rounded-lg p-3"
-          style={{ 
-            backgroundColor: 'var(--bg)',
-            borderColor: 'var(--card-border)',
-            color: 'var(--text-primary)'
-          }}
+          className="w-full border rounded-lg p-3 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
           value={form.service} 
           onChange={(e) => setForm({ ...form, service: e.target.value })}
         >
@@ -66,22 +51,12 @@ export default function Reserve() {
         </select>
         <input 
           type="datetime-local" 
-          className="w-full border rounded-lg p-3"
-          style={{ 
-            backgroundColor: 'var(--bg)',
-            borderColor: 'var(--card-border)',
-            color: 'var(--text-primary)'
-          }}
+          className="w-full border rounded-lg p-3 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
           value={form.date} 
           onChange={(e) => setForm({ ...form, date: e.target.value })} 
         />
         <textarea 
-          className="w-full border rounded-lg p-3"
-          style={{ 
-            backgroundColor: 'var(--bg)',
-            borderColor: 'var(--card-border)',
-            color: 'var(--text-primary)'
-          }}
+          className="w-full border rounded-lg p-3 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
           placeholder="Notas (opcional)" 
           rows="4" 
           value={form.notes} 
@@ -97,20 +72,21 @@ export default function Reserve() {
         </button>
 
         {status === "ok" && (
-          <div className="font-medium text-center mt-2" style={{ color: '#16a34a' }}>
+          <div className="font-medium text-center mt-2 text-green-600 dark:text-green-400">
             Reserva enviada. ¡Gracias!
           </div>
         )}
         {status === "error" && (
-          <div className="font-medium text-center mt-2" style={{ color: '#dc2626' }}>
+          <div className="font-medium text-center mt-2 text-red-600 dark:text-red-400">
             Ocurrió un error. Intenta nuevamente.
           </div>
         )}
         {status === "missing" && (
-          <div className="font-medium text-center mt-2" style={{ color: '#ea8900' }}>
+          <div className="font-medium text-center mt-2 text-yellow-600 dark:text-yellow-400">
             Completa nombre, servicio y fecha.
           </div>
         )}
+      </div>
       </div>
     </div>
   );

@@ -19,7 +19,7 @@
 }
 
 /* Dark mode */
-[data-theme="dark"] {
+.dark {
   --bg: #0f172a;
   --bg-secondary: #1a254d;
   --text-primary: #f0f4f8;
@@ -43,6 +43,12 @@ body {
   font-family: system-ui, -apple-system, sans-serif;
 }
 
+/* Force body background in dark mode */
+.dark body {
+  background-color: #0f172a !important;
+  color: #f0f4f8 !important;
+}
+
 /* Smooth scroll with header offset to prevent overlap */
 html {
   scroll-behavior: smooth;
@@ -63,11 +69,8 @@ p, li, label {
   color: var(--text-secondary);
 }
 
-a {
-  color: #2563eb;
-}
-
-[data-theme="dark"] a {
+[data-theme="dark"] a,
+.dark a {
   color: #60a5fa;
 }
 
@@ -113,13 +116,10 @@ textarea::placeholder {
   color: var(--text-secondary);
 }
 
-.sidebar a:hover,
-.sidebar a.active {
-  color: #2563eb;
-}
-
 [data-theme="dark"] .sidebar a:hover,
-[data-theme="dark"] .sidebar a.active {
+[data-theme="dark"] .sidebar a.active,
+.dark .sidebar a:hover,
+.dark .sidebar a.active {
   color: #60a5fa;
 }
 
@@ -135,12 +135,56 @@ header button {
   color: var(--navbar-text) !important;
 }
 
-/* === SPECIFIC TEXT FIXES === */
-.text-gray-700 { color: var(--text-secondary) !important; }
-.text-gray-600 { color: var(--text-muted) !important; }
-.text-gray-500 { color: var(--text-muted) !important; }
-.text-gray-800 { color: var(--text-primary) !important; }
-.text-black { color: var(--text-primary) !important; }
+/* === DARK MODE OVERRIDES === */
+/* Force dark mode styles when .dark class is present */
+.dark .bg-white {
+  background-color: #1a254d !important;
+  color: #f0f4f8 !important;
+}
+
+.dark .dark\:bg-gray-900 {
+  background-color: #0f172a !important;
+}
+
+.dark .text-gray-900 {
+  color: #f0f4f8 !important;
+}
+
+.dark .text-gray-600 {
+  color: #cbd5e1 !important;
+}
+
+.dark .text-gray-500 {
+  color: #94a3b8 !important;
+}
+
+.dark .text-gray-300 {
+  color: #cbd5e1 !important;
+}
+
+.dark .border-gray-200 {
+  border-color: #334155 !important;
+}
+
+.dark .border-gray-700 {
+  border-color: #334155 !important;
+}
+
+.dark .text-blue-600 {
+  color: #60a5fa !important;
+}
+
+.dark .text-blue-400 {
+  color: #60a5fa !important;
+}
+
+.dark .hover\:text-red-600:hover {
+  color: #ef4444 !important;
+}
+
+.dark .hover\:text-red-400:hover {
+  color: #ef4444 !important;
+}
 
 /* === PROFILE IMAGES === */
 .profile-img,
@@ -165,14 +209,22 @@ main {
   min-height: 100vh;
 }
 
-/* === MEDIA QUERIES === */
-@media (max-width: 768px) {
-  html { scroll-padding-top: 4rem; }
-  
-  .sidebar {
-    position: fixed;
-    width: 100%;
-    height: auto;
-    max-height: calc(100vh - 4rem);
-  }
+/* === MOBILE NAVIGATION === */
+.mobile-nav {
+  background-color: var(--card) !important;
+  border-color: var(--card-border) !important;
+  color: var(--text-primary) !important;
+}
+
+.mobile-nav a {
+  color: var(--text-secondary) !important;
+}
+
+.mobile-nav a.active {
+  color: #2563eb !important;
+}
+
+[data-theme="dark"] .mobile-nav a.active,
+.dark .mobile-nav a.active {
+  color: #60a5fa !important;
 }

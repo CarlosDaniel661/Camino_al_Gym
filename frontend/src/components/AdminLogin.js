@@ -18,7 +18,7 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6">
+    <div className="min-h-screen flex items-center justify-center p-6 bg-white dark:bg-gray-900">
       <div className="w-full max-w-sm bg-white shadow-md rounded-xl p-6">
         <h2 className="text-2xl font-bold text-center mb-6">
           Panel Administrativo

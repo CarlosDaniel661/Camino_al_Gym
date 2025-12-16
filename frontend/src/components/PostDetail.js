@@ -23,28 +23,33 @@ export default function PostDetail() {
 
   if (error) {
     return (
-      <div className="p-6 max-w-lg mx-auto text-center">
-        <h2 className="text-2xl font-bold mb-2" style={{ color: '#dc2626' }}>
-          Error
-        </h2>
-        <p style={{ color: 'var(--text-muted)' }}>{error}</p>
-        <Link className="hover:underline mt-4 inline-block" to="/">
-          ← Volver al inicio
-        </Link>
+      <div className="min-h-screen bg-white dark:bg-gray-900">
+        <div className="p-6 max-w-lg mx-auto text-center">
+          <h2 className="text-2xl font-bold mb-2 text-red-600 dark:text-red-400">
+            Error
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300">{error}</p>
+          <Link className="hover:underline mt-4 inline-block text-blue-600 dark:text-blue-400" to="/">
+            ← Volver al inicio
+          </Link>
+        </div>
       </div>
     );
   }
 
   if (!post) {
     return (
-      <div className="p-6 text-center" style={{ color: 'var(--text-muted)' }}>
-        Cargando...
+      <div className="min-h-screen bg-white dark:bg-gray-900">
+        <div className="p-6 text-center text-gray-600 dark:text-gray-300">
+          Cargando...
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="p-4 max-w-2xl mx-auto">
+    <div className="min-h-screen bg-white dark:bg-gray-900">
+      <div className="p-4 max-w-2xl mx-auto">
       <button 
         className="mb-4 flex items-center gap-2 transition"
         style={{ color: 'var(--text-secondary)' }}
@@ -99,6 +104,7 @@ export default function PostDetail() {
           </div>
         </div>
       </article>
+      </div>
     </div>
   );
 }

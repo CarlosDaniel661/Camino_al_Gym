@@ -17,8 +17,8 @@ export default function About() {
   }, []);
 
   return (
-    <div className="p-6 max-w-3xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4 feed-title">Sobre mí</h1>
+    <div className="p-6 max-w-3xl mx-auto min-h-screen bg-white dark:bg-gray-900">
+      <h1 className="text-3xl font-bold mb-4 feed-title text-gray-900 dark:text-white">Sobre mí</h1>
 
       <div className="flex flex-col md:flex-row gap-8 items-start md:items-center mb-6">
         <div className="flex-shrink-0 w-full md:w-auto flex justify-center md:justify-start">

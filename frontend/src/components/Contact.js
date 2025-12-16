@@ -17,23 +17,27 @@ export default function Contact() {
 
   if (sent) {
     return (
-      <div 
-        className="p-6 mt-10 max-w-md mx-auto text-center shadow-md rounded-xl"
-        style={{ backgroundColor: 'var(--card)' }}
-      >
-        <h1 className="text-2xl font-bold mb-4" style={{ color: '#16a34a' }}>
-          ¡Mensaje enviado!
-        </h1>
-        <p style={{ color: 'var(--text-secondary)' }}>
-          Gracias por comunicarte, responderé lo antes posible.
-        </p>
+      <div className="min-h-screen bg-white dark:bg-gray-900">
+        <div
+          className="p-6 mt-10 max-w-md mx-auto text-center shadow-md rounded-xl bg-white dark:bg-gray-800"
+        >
+          <h1 className="text-2xl font-bold mb-4 text-green-600">
+            ¡Mensaje enviado!
+          </h1>
+          <p className="text-gray-600 dark:text-gray-300">
+            Gracias por comunicarte, responderé lo antes posible.
+          </p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="mt-10 flex justify-center">
-      <form 
+    <div className="min-h-screen bg-white dark:bg-gray-900">
+      <form
+        className="w-full max-w-md shadow-lg rounded-xl p-6 space-y-4 mx-auto mt-10 bg-white dark:bg-gray-800"
+        onSubmit={handleSubmit}
+      >
         className="w-full max-w-md shadow-lg rounded-xl p-6 space-y-4"
         style={{ backgroundColor: 'var(--card)' }}
         onSubmit={handleSubmit}
